@@ -579,7 +579,7 @@ public class OverviewHelper {
                 FileUtils.copyDirectory(new File(projConf.ORIG_IMG_DIR), new File(projConf.BACKUP_IMG_DIR));
 
             convertImagesToPNG();
-            renameFiles();
+            // renameFiles();
         }
         getProgress();
         overviewRunning = false;
