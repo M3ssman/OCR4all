@@ -283,18 +283,18 @@ public class OverviewHelper {
      * @param regex Regex String for matching filenames
      * @return all files witch match the regex pattern
      */
-    public static File[] listFilesMatching(File root, String regex) {
-        if(!root.isDirectory()) {
-            throw new IllegalArgumentException(root + " is no directory");
-        }
-        final Pattern p = Pattern.compile(regex);
-        return root.listFiles(new FileFilter(){
-            @Override
-            public boolean accept(File file) {
-                return p.matcher(file.getName()).matches();
-            }
-        });
-    }
+    // private static File[] listFilesMatching(File root, String regex) {
+    //     if(!root.isDirectory()) {
+    //         throw new IllegalArgumentException(root + " is no directory");
+    //     }
+    //     final Pattern p = Pattern.compile(regex);
+    //     return root.listFiles(new FileFilter(){
+    //         @Override
+    //         public boolean accept(File file) {
+    //             return p.matcher(file.getName()).matches();
+    //         }
+    //     });
+    // }
 
     /**
      * Checks if the projectDir exits
@@ -342,10 +342,13 @@ public class OverviewHelper {
         if (imagesToConvert.size() > 0)
             return false;
 
-        File[] imagesWithCorrectNaming = listFilesMatching(new File(projConf.ORIG_IMG_DIR),"^\\d{4,}" + projConf.IMG_EXT);
-        File[] imagesAll = new File(projConf.ORIG_IMG_DIR).listFiles((d, name) -> name.endsWith(projConf.IMG_EXT));
+        // m3ssman change start
+        // File[] imagesWithCorrectNaming = listFilesMatching(new File(projConf.ORIG_IMG_DIR),"^\\d{4,}" + projConf.IMG_EXT);
+        // File[] imagesAll = new File(projConf.ORIG_IMG_DIR).listFiles((d, name) -> name.endsWith(projConf.IMG_EXT));
         // Check for images with incorrect naming
-        return imagesWithCorrectNaming.length == imagesAll.length;
+        // return imagesWithCorrectNaming.length == imagesAll.length;
+        // m3ssman change end
+        return true;
     }
 
     /**
