@@ -152,7 +152,15 @@ public class LineSegmentationHelper {
         ArrayNode dataList = mapper.createArrayNode();
         for (String pageId : pageIds) {
             ArrayNode pageList = mapper.createArrayNode();
-        	pageList.add(projConf.getImageDirectoryByType(projectImageType) + pageId + projConf.getImageExtensionByType(projectImageType));
+            if (new File(projConf.getImageDirectoryByType("Despeckled") + pageId
+                    + projConf.getImageExtensionByType("Despeckled")).exists())
+                pageList.add(projConf.getImageDirectoryByType("Despeckled")
+                        + pageId
+                        + projConf.getImageExtensionByType("Despeckled"));
+            else
+                pageList.add(projConf.getImageDirectoryByType(projectImageType)
+                        + pageId
+                        + projConf.getImageExtensionByType(projectImageType));
         	final String pageXML = projConf.OCR_DIR + pageId + projConf.CONF_EXT;
             pageList.add(pageXML);
 
