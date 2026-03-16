@@ -152,15 +152,21 @@ public class LineSegmentationHelper {
         ArrayNode dataList = mapper.createArrayNode();
         for (String pageId : pageIds) {
             ArrayNode pageList = mapper.createArrayNode();
-            if (new File(projConf.getImageDirectoryByType("Despeckled") + pageId
-                    + projConf.getImageExtensionByType("Despeckled")).exists())
-                pageList.add(projConf.getImageDirectoryByType("Despeckled")
-                        + pageId
-                        + projConf.getImageExtensionByType("Despeckled"));
-            else
-                pageList.add(projConf.getImageDirectoryByType(projectImageType)
-                        + pageId
-                        + projConf.getImageExtensionByType(projectImageType));
+            // ULB Start
+            // Rationale: Fix issue line segmentation being executed with gray image,
+            // even though a despeckled image exists. This can lead to worse results,
+            // since the despeckled image is usually of better quality than the gray image.
+            String despeckledImagePath = projConf.getImageDirectoryByType("Despeckled") + pageId + projConf.getImageExtensionByType("Despeckled");
+            if (new File(despeckledImagePath).exists())
+                 pageList.add(despeckledImagePath);
+            else {
+                String typedImage = projConf.getImageDirectoryByType(projectImageType) + pageId + projConf.getImageExtensionByType(projectImageType);
+                pageList.add(typedImage);
+            }
+            // ULB End
+            // Original Start
+            //pageList.add(projConf.getImageDirectoryByType(projectImageType) + pageId + projConf.getImageExtensionByType(projectImageType));
+            // Original End
         	final String pageXML = projConf.OCR_DIR + pageId + projConf.CONF_EXT;
             pageList.add(pageXML);
 
