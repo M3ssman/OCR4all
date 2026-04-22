@@ -174,6 +174,7 @@ public class OverviewHelper {
      * @throws IOException
      */
     public void initialize(String pageId) throws IOException {
+        System.out.println("Initialize page " + pageId+ " with ext " + projConf.IMG_EXT + " in " + projConf.ORIG_IMG_DIR);
         File pageImg = new File(projConf.ORIG_IMG_DIR + pageId + projConf.IMG_EXT);
         if (pageImg.exists()) {
             // Create page overview with states of all required processes
@@ -188,7 +189,11 @@ public class OverviewHelper {
             overview.put(pageImg.getName(), pOverview);
         }
         else {
-            throw new IOException("Page does not exist!");
+            // ULB mark start
+            String msg = "[ERROR] Page " + pageId + " does not exist!";
+            System.out.println(msg);
+            // throw new IOException(msg);
+            // ULB mark end
         }
     }
 
