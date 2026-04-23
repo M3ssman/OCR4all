@@ -46,7 +46,7 @@
                             { title: "Ground Truth", data: "groundtruth" },
                         ],
                         createdRow: function( row, data, index ){
-                            $('td:first-child', row).html('<a href="pageOverview?pageId=' + data.pageId + '">' + data.pageId + '</a>');
+                            $('td:first-child', row).html('<a href="pageOverview?pageId=' + encodeURIComponent(data.pageId) + '">' + data.pageId + '</a>');
                             $.each( $('td:not(:first-child)', row), function( idx, td ) {
                                 if( $(td).html() === 'true' ) {
                                     $(td).html('<i class="material-icons green-text">check</i>');
