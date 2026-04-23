@@ -66,7 +66,7 @@
                         let liList = [];
                         for (i = 0; i < picListL.length; i++) {
                             let id = picListL[i].pageId;
-                            let newLocation = window.location.href.split("?")[0] + "?len=" + picListL.length + "&pageId=" + id;
+                            let newLocation = window.location.href.split("?")[0] + "?len=" + picListL.length + "&pageId=" + encodeURIComponent(id);
                             let li = document.createElement("li");
                             let a = document.createElement("a");
                             a.setAttribute("href", newLocation);
@@ -110,24 +110,24 @@
 
                 $("#pn-prev").click(() => {
                     let searchParams = new URLSearchParams(window.location.search);
-                    let page_id = searchParams.get("pageId");
-                    let prev_page_index  = $('#pages01>li').index($('#pages01>li[value=' + page_id + ']'))-1;
+                    let page_id = searchParams.get(encodeURIComponent("pageId"));
+                    let prev_page_index  = $('#pages01>li').index($('#pages01>li[value=' + encodeURIComponent(page_id) + ']'))-1;
 
                     if (prev_page_index >= 0) {
                         let prev_page = $('#pages01>li').eq(prev_page_index).attr('value');
-                        let newLocation = window.location.href.split("?")[0] + "?pageId=" + prev_page;
+                        let newLocation = window.location.href.split("?")[0] + "?pageId=" + encodeURIComponent(prev_page);
                         window.location.href = newLocation;
                     }
                 });
 
                 $("#pn-next").click(() => {
                     let searchParams = new URLSearchParams(window.location.search);
-                    let page_id = searchParams.get("pageId");
-                    let next_page_index  = $('#pages01>li').index($('#pages01>li[value=' + page_id + ']'))+1;
+                    let page_id = searchParams.get(encodeURIComponent("pageId"));
+                    let next_page_index  = $('#pages01>li').index($('#pages01>li[value=' + encodeURIComponent(page_id) + ']'))+1;
 
                     if (next_page_index < $('#pages01>li').length){
                         let next_page = $('#pages01>li').eq(next_page_index).attr('value');
-                        let newLocation = window.location.href.split("?")[0]  + "?pageId=" + next_page;
+                        let newLocation = window.location.href.split("?")[0]  + "?pageId=" + encodeURIComponent(next_page);
                         window.location.href = newLocation;
                     }
                 });

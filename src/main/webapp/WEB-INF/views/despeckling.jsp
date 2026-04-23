@@ -22,7 +22,7 @@
                 // Function to load page image on demand via AJAX
                 function loadPageImage(divEl, pageId, imageType) {
                     var ajaxUrl = (imageType == 'Despeckled') ? "ajax/image/preview/despeckled" : "ajax/image/page";
-                    var ajaxParams = { "pageId" : pageId, "imageId" : imageType, "width" : 960 };
+                    var ajaxParams = { "pageId" : encodeURIComponent(pageId), "imageId" : encodeURIComponent(imageType), "width" : 960 };
                     if( imageType == 'Despeckled' ) {
                         $.extend(ajaxParams, { "maxContourRemovalSize" : $('input[name="maxContourRemovalSize"]').val() });
                         $.extend(ajaxParams, { "illustrationType" : $('select[name="illustrationType"]').val() });
