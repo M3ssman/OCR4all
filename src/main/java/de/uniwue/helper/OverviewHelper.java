@@ -27,6 +27,11 @@ import java.util.zip.ZipOutputStream;
 
 import javax.imageio.ImageIO;
 
+// ULB mark start
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+// ULB mark end
+
 import de.uniwue.feature.ProcessHandler;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -67,6 +72,10 @@ public class OverviewHelper {
      * }
      */
     private Map<String, PageOverview> overview = new HashMap<>();
+
+    // ULB mark start
+    static Logger logger = LoggerFactory.getLogger(OverviewHelper.class);
+    // ULB mark end
 
     /**
      * Helper object for process handling
@@ -174,8 +183,10 @@ public class OverviewHelper {
      * @throws IOException
      */
     public void initialize(String pageId) throws IOException {
-        System.out.println("Initialize page " + pageId+ " with ext " + projConf.IMG_EXT + " in " + projConf.ORIG_IMG_DIR);
         File pageImg = new File(projConf.ORIG_IMG_DIR + pageId + projConf.IMG_EXT);
+        // ULB mark start
+        logger.info("initialize image {} with ext {} in {}", pageImg.getName(), projConf.IMG_EXT, projConf.ORIG_IMG_DIR);
+        // ULB mark end
         if (pageImg.exists()) {
             // Create page overview with states of all required processes
             PageOverview pOverview = new PageOverview(pageId);
@@ -185,14 +196,13 @@ public class OverviewHelper {
             pOverview.setLinesExtracted(procStateCol.lineSegmentationState(pageId));
             pOverview.setRecognition(procStateCol.recognitionState(pageId));
             pOverview.setGroundtruth(procStateCol.groundTruthState(pageId));
-
             overview.put(pageImg.getName(), pOverview);
-        }
-        else {
             // ULB mark start
-            String msg = "[ERROR] Page " + pageId + " does not exist!";
-            System.out.println(msg);
-            // throw new IOException(msg);
+            logger.info("set overview for page {}: {}", pageId, pOverview);
+            // ULB mark end
+        } else {
+            // ULB mark start
+            logger.error("page file {} does not exist in {}", pageImg.getName(), projConf.ORIG_IMG_DIR);
             // ULB mark end
         }
     }
